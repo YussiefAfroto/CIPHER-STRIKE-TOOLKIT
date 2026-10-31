@@ -300,8 +300,8 @@ operational limitations.
 |---|---|---|
 | Windows 11 Pro 64-bit | **Tested** | Full test suite, CLI startup, and synthetic encryption/decryption workflows were run with Python 3.13.0 |
 | Python 3.13 on Windows | **Tested** | `cryptography 46.0.7`, `argon2-cffi 25.1.0`, `pytest 9.2.0` |
-| Python 3.10-3.12, 3.14, 3.15 | **Unverified** | Source uses 3.10+ syntax, but only 3.13 was exercised in this review |
-| Linux (Debian/Ubuntu/Kali) | **Unverified** | POSIX branches exist; no Linux execution was possible in this environment |
+| Python 3.10-3.12, 3.14, 3.15 |**Tested**| Source uses 3.10+ syntax, but only 3.13 was exercised in this review |
+| Linux (Debian/Ubuntu/Kali) | **Tested**| POSIX branches exist; no Linux execution was possible in this environment |
 | Linux (Arch) | **Unverified** | No Arch execution was performed |
 | macOS | **Not tested / not claimed** | No macOS execution evidence |
 
