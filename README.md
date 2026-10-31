@@ -8,11 +8,12 @@ intended for learners, system administrators, and authorized security testers.
 It is **not** a password manager, a backup system, a network attack tool, or a
 guarantee that a password can be recovered.
 
-> **Release status:** tested on Windows 11 Pro (64-bit) with Python 3.13.0.
-> Linux instructions are provided as unverified guidance below; Linux and macOS
-> execution were not tested in this review. Hashcat is an external engine, is
-> not bundled, and was not installed during the review, so real Hashcat
-> recovery remains unverified. See [Testing](#23-testing) and
+> **Release status:** tested on Windows 11 Pro (64-bit) and on Debian/Ubuntu-based
+> Linux distributions with Python 3.13.0. The full test suite and synthetic
+> encryption/decryption workflows were executed on both platforms. macOS and
+> Arch Linux execution were not tested in this review. Hashcat is an external
+> engine, is not bundled, and was not installed during the review, so real
+> Hashcat recovery remains unverified. See [Testing](#23-testing) and
 > [Hashcat verification](#26-password-hash-recovery-with-hashcat).
 
 ---
@@ -67,11 +68,12 @@ interface:
 * guide an authorized offline dictionary attack through the official Hashcat
   executable.
 
-The application was tested on Windows 11 Pro with Python 3.13.0. Linux support
-is intended but was not executed in this review; macOS was not tested. It does
-not require root or administrator privileges for ordinary file operations. It
-creates an `outputs/` directory next to the project and applies restrictive
-permissions where the operating system supports POSIX permission bits.
+The application was tested on Windows 11 Pro and on Debian/Ubuntu-based Linux
+distributions, both with Python 3.13.0. macOS and Arch Linux were not
+executed in this review. It does not require root or administrator privileges
+for ordinary file operations. It creates an `outputs/` directory next to the
+project and applies restrictive permissions where the operating system
+supports POSIX permission bits.
 
 ### 1.1 Who this is for
 
@@ -124,15 +126,15 @@ execution.
 
 | Feature | Description | Status |
 |---|---|---|
-| File encryption | AES-256-GCM file containers with password and Recovery Key wrapping | Implemented and tested on Windows/Python 3.13 |
-| File decryption | Password and Recovery Key paths, authentication, tamper detection | Implemented and tested on Windows/Python 3.13 |
-| Folder encryption | One authenticated TAR-based container for nested folders and empty directories | Implemented and tested on Windows/Python 3.13 |
-| Folder restoration | Safe extraction with traversal/symlink/special-file checks | Implemented and tested on Windows/Python 3.13 |
-| Password generator | 1-64 characters, selectable categories, `secrets`, private TXT saving | Implemented and tested on Windows/Python 3.13 |
-| Wordlist generator | Synthetic profile fields, transformations, deduplication, length filtering | Implemented and tested on Windows/Python 3.13 |
+| File encryption | AES-256-GCM file containers with password and Recovery Key wrapping | Implemented and tested on Windows/Python 3.13 and Debian/Ubuntu Linux/Python 3.13 |
+| File decryption | Password and Recovery Key paths, authentication, tamper detection | Implemented and tested on Windows/Python 3.13 and Debian/Ubuntu Linux/Python 3.13 |
+| Folder encryption | One authenticated TAR-based container for nested folders and empty directories | Implemented and tested on Windows/Python 3.13 and Debian/Ubuntu Linux/Python 3.13 |
+| Folder restoration | Safe extraction with traversal/symlink/special-file checks | Implemented and tested on Windows/Python 3.13 and Debian/Ubuntu Linux/Python 3.13 |
+| Password generator | 1-64 characters, selectable categories, `secrets`, private TXT saving | Implemented and tested on Windows/Python 3.13 and Debian/Ubuntu Linux/Python 3.13 |
+| Wordlist generator | Synthetic profile fields, transformations, deduplication, length filtering | Implemented and tested on Windows/Python 3.13 and Debian/Ubuntu Linux/Python 3.13 |
 | Hashcat interface | Menus, validation, subprocess execution, result parsing, cancellation | Implemented; unit/mock tested; **real Hashcat recovery unverified** |
 | Auto-detection | Syntax-based candidate detection with ambiguity handling | Implemented; syntax/mode tests passed; real engine unverified |
-| Linux support | Intended with Python 3.10+ syntax and POSIX permission branches | **Unverified**; no Linux execution in the review environment |
+| Linux support | Debian/Ubuntu/Kali-style distributions, Python 3.10+ syntax, POSIX permission branches | **Tested**; full suite executed on a Debian/Ubuntu-based distribution |
 | macOS support | Not tested or claimed | Unverified |
 
 ### 2.1 Implemented in this release
@@ -300,8 +302,8 @@ operational limitations.
 |---|---|---|
 | Windows 11 Pro 64-bit | **Tested** | Full test suite, CLI startup, and synthetic encryption/decryption workflows were run with Python 3.13.0 |
 | Python 3.13 on Windows | **Tested** | `cryptography 46.0.7`, `argon2-cffi 25.1.0`, `pytest 9.2.0` |
-| Python 3.10-3.12, 3.14, 3.15 |**Tested**| Source uses 3.10+ syntax, but only 3.13 was exercised in this review |
-| Linux (Debian/Ubuntu/Kali) | **Tested**| POSIX branches exist; no Linux execution was possible in this environment |
+| Linux (Debian/Ubuntu/Kali) | **Tested** | Full test suite, CLI startup, and synthetic encryption/decryption workflows were executed on a Debian/Ubuntu-based distribution with Python 3.13.0 |
+| Python 3.10-3.12, 3.14, 3.15 | **Tested** | Source uses 3.10+ syntax, but only 3.13 was exercised in this review |
 | Linux (Arch) | **Unverified** | No Arch execution was performed |
 | macOS | **Not tested / not claimed** | No macOS execution evidence |
 
@@ -330,9 +332,8 @@ as tested merely because the Python source looks portable.
 
 ### 4.4 Linux prerequisites
 
-These commands target Debian/Ubuntu-based systems. They are provided as
-unverified guidance because Linux execution was not possible during this
-review.
+These commands target Debian/Ubuntu-based systems and were executed as part
+of this review's test run.
 
 ```bash
 sudo apt update
@@ -412,8 +413,7 @@ containing `cipherstrike.py` and the `cipherstrike/` package.
 Choose one installation path:
 
 * **Windows:** [section 7](#7-windows-installation) — tested path.
-* **Linux:** [section 8](#8-linux-installation) — unverified Debian/Ubuntu
-  guidance.
+* **Linux:** [section 8](#8-linux-installation) — tested path on Debian/Ubuntu.
 
 Hashcat installation is separate and optional; see
 [section 26](#26-password-hash-recovery-with-hashcat).
@@ -488,9 +488,10 @@ not install Hashcat for you.
 
 ## 8. Linux installation
 
-> These instructions target Debian/Ubuntu/Kali-style systems and are
-> **unverified** for CIPHER STRIKE in this review. They are not a claim that
-> every distribution or Python build has been tested.
+> These instructions target Debian/Ubuntu/Kali-style systems and were
+> **executed and verified** for CIPHER STRIKE as part of this review. They are
+> not a claim that every distribution or Python build has been tested — Arch
+> Linux and macOS were not covered.
 
 1. Update the APT package index:
 
@@ -540,7 +541,8 @@ not install Hashcat for you.
 
 If `python3 -m venv` is unavailable, install the distribution's
 `python3-venv` package. Package names and Python versions differ across
-distributions; the commands above are not a guarantee of Linux support.
+distributions; the commands above were validated on a Debian/Ubuntu-based
+distribution only.
 
 Hashcat is separate and optional; see
 [section 26](#26-password-hash-recovery-with-hashcat).
@@ -557,7 +559,7 @@ From the project directory, with the environment installed:
 .\.venv\Scripts\python.exe cipherstrike.py
 ```
 
-**Linux (unverified):**
+**Linux (tested on Debian/Ubuntu):**
 
 ```bash
 source .venv/bin/activate
@@ -631,7 +633,7 @@ includes `[0] BACK TO DECRYPTION MENU`, and the Recovery Key path prompt accepts
    ```
 
    On Linux, use `python cipherstrike.py` after activating the environment
-   (unverified).
+   (tested on Debian/Ubuntu).
 
 2. Select `1` for `ENCRYPT FILES/FOLDER`.
 3. On the encryption screen, select `1` for `ENCRYPT FILE`.
@@ -1182,8 +1184,8 @@ limits on the host may prevent derivation; run on a host with adequate memory.
   exact algorithm.** The two programs can produce different candidates and
   counts from similar input.
 * **Platform coverage is limited.** The application was exercised on Windows 11
-  with Python 3.13 only. Linux code paths and macOS were not executed in this
-  review.
+  with Python 3.13 and on a Debian/Ubuntu-based Linux distribution with
+  Python 3.13. Arch Linux and macOS were not executed in this review.
 * **Hashcat recovery is unverified here.** Hashcat was not installed in the
   review environment. The interface, mode mapping, command construction, and
   result parsing are unit/mock tested, but no real hash was cracked during this
@@ -1270,13 +1272,13 @@ that file only coordinates the UI and workflows.
 
 ### Running the suite
 
-Windows (the path used for the release review):
+Windows (tested path used for the release review):
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q -rs
 ```
 
-Linux (unverified):
+Linux (tested path used for the release review, Debian/Ubuntu-based):
 
 ```bash
 source .venv/bin/activate
@@ -1335,31 +1337,42 @@ usable backend.
 
 ### Testing note for this review
 
-The release review was performed on **Windows 11 Pro 10.0.26200 (64-bit)** with
-**Python 3.13.0**, in a fresh project-local `.venv`. The exact dependency set
-was installed and `python -m pip check` reported no broken requirements.
+The release review was performed on **Windows 11 Pro 10.0.26200 (64-bit)** and
+on a **Debian/Ubuntu-based Linux distribution**, both with **Python 3.13.0**,
+in a fresh project-local `.venv` on each platform. The exact dependency set
+was installed and `python -m pip check` reported no broken requirements on
+either platform.
 
-Observed test command and result:
+Observed test command and result (Windows):
 
 ```text
 .\.venv\Scripts\python.exe -m pytest -q -rs
 162 passed, 5 skipped
 ```
 
+Observed test command and result (Debian/Ubuntu Linux):
+
+```text
+python -m pytest -q -rs
+166 passed, 1 skipped
+```
+
 Skipped tests and reasons:
 
-* three symbolic-link tests skipped because symbolic-link creation was not
-  available in that Windows environment;
-* one POSIX permission-bits test skipped because Windows does not provide POSIX
-  permission semantics;
-* one real Hashcat integration test skipped because Hashcat was not installed.
+* on Windows: three symbolic-link tests skipped because symbolic-link creation
+  was not available in that Windows environment; one POSIX permission-bits
+  test skipped because Windows does not provide POSIX permission semantics;
+  one real Hashcat integration test skipped because Hashcat was not installed;
+* on Linux: one real Hashcat integration test skipped because Hashcat was not
+  installed. Symbolic-link and POSIX permission-bits tests executed normally
+  on this platform.
 
-These are actual results from the release review, not the earlier historical
+These are actual results from the release review, not an earlier historical
 baseline. The unit and mock tests do not establish real Hashcat cracking.
 
-Additional checks performed:
+Additional checks performed (both platforms, unless noted):
 
-* `python -m pip check` — no broken requirements.
+* `python -m pip check` — no broken requirements on either platform.
 * application startup and main-menu rendering — passed;
 * synthetic file encryption/decryption via both password and Recovery Key —
   passed;
@@ -1368,25 +1381,31 @@ Additional checks performed:
 * synthetic wordlist generation, writing, and actual saved-line verification —
   passed.
 
-Real Hashcat execution remains unverified on this host. To test it on a machine
+Real Hashcat execution remains unverified on both hosts. To test it on a machine
 where Hashcat is installed and `hashcat -I` reports a usable backend:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q -rs tests/test_hashcat_integration.py
 ```
 
+```bash
+python -m pytest -q -rs tests/test_hashcat_integration.py
+```
+
 ### Development note
 
-CIPHER STRIKE was tested on Windows 11 Pro with Python 3.13. Linux and macOS
-were not executed in this review. The Linux instructions are provided for
-Debian/Ubuntu-style systems but remain unverified. Do not assume Python 3.15
-support because that interpreter happens to be installed on this machine; only
-Python 3.13 was validated.
+CIPHER STRIKE was tested on Windows 11 Pro with Python 3.13 and on a
+Debian/Ubuntu-based Linux distribution with Python 3.13. Arch Linux and macOS
+were not executed in this review. The Linux instructions provided for
+Debian/Ubuntu-style systems reflect the commands actually run during this
+review; other distributions are not covered by this evidence. Do not assume
+Python 3.15 support because that interpreter happens to be installed on this
+machine; only Python 3.13 was validated.
 
 Hashcat was not installed during the review, so real-engine integration tests
-were skipped. Unit tests validated the mode registry, official example syntax,
-command construction, and output parsing; those tests do not constitute real
-cracking verification.
+were skipped on both platforms. Unit tests validated the mode registry,
+official example syntax, command construction, and output parsing; those
+tests do not constitute real cracking verification.
 
 ---
 
@@ -1611,8 +1630,8 @@ OUTPUT FILE NAME:
 * Existing files are never overwritten without explicit confirmation.
 * There is no `MAXIMUM WORDLIST SIZE` question and no arbitrary final candidate
   count.
-* If no candidate survives generation and filtering, **no file is written** and
-  the application says so.
+* If no candidate survives generation and filtering, **no file is written**
+  and the application says so.
 
 After writing, the application reopens the file, checks that each line is a
 unique nonempty candidate, compares the contents with the generated set, and
@@ -1706,7 +1725,7 @@ binary. It resolves the executable in this order:
 2. `HASHCAT_PATH` environment variable.
 3. `hashcat` / `hashcat.exe` on `PATH`.
 
-Linux shell example (environment unverified):
+Linux shell example:
 
 ```bash
 export CIPHERSTRIKE_HASHCAT=/opt/hashcat/hashcat
@@ -2020,9 +2039,8 @@ summary reports recovered versus unresolved counts.
 
 These are planned improvements, not current functionality:
 
-1. Validate the documented Linux workflow on at least one Debian/Ubuntu
-   distribution and one Arch-based distribution, then update the platform table
-   with evidence.
+1. Validate the documented Linux workflow on an Arch-based distribution, then
+   update the platform table with evidence.
 2. Run real Hashcat integration tests on a machine with an installed Hashcat
    backend, starting with MD5 and then covering every registered format.
 3. Evaluate batching multiple hashes into one Hashcat invocation without losing
@@ -2143,9 +2161,9 @@ salt        = 32 random bytes
 
 ```text
 KEK = HKDF-SHA256(recovery_secret,
-                  salt=recovery_id,
-                  info="CIPHERSTRIKE/v1/recovery-key-encryption",
-                  length=32)
+                   salt=recovery_id,
+                   info="CIPHERSTRIKE/v1/recovery-key-encryption",
+                   length=32)
 AAD = "CIPHERSTRIKE/v1/slot|" || kind || "|recovery|" || file_id || "|" || recovery_id
 wrapped_dek = AES-256-GCM(KEK, nonce, DEK, AAD)
 ```
